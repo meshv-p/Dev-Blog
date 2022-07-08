@@ -9,9 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/lab": "^5.0.0-alpha.89",
+    "@mui/material": "^5.8.6",
+    "@react-oauth/google": "^0.2.6",
+    "@tinymce/tinymce-react": "^4.1.0",
     "next": "12.2.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-top-loading-bar": "^2.1.0",
+    "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
     "eslint": "8.19.0",
