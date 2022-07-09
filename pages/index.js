@@ -13,7 +13,7 @@ export default function Home({ data: { allBlogs } }) {
   const router = useRouter();
 
   useEffect(() => {
-    setLogginUserData(JSON.parse(localStorage.getItem("user"))?.profile);
+    setLogginUserData(JSON.parse(localStorage.getItem("user")));
   }, []);
 
   useEffect(() => {

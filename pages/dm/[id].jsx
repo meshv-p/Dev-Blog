@@ -159,7 +159,7 @@ const ChatScreen = () => {
 
         // e.preventDefault()
         socket.emit('typing', {
-            'sender': logginUserData._id,
+            'sender': logginUserData.profile._id,
             'to': selectedUserData._id,
             'time': Date().toString,
             'fromMe': true
@@ -168,7 +168,7 @@ const ChatScreen = () => {
 
     const handleDone = () => {
         socket.emit('stop-typing', {
-            'sender': logginUserData._id,
+            'sender': logginUserData.profile._id,
             'to': selectedUserData?._id,
             'time': Date().toString,
             'fromMe': true
