@@ -170,7 +170,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
                         {/* {(blog?.desc)?.slice(0, 50)} */}
                     </Typography>
 
-                    <Stack direction="row" gap={2} sx={{ my: 1 }}>
+                    <Stack direction="row" gap={2} sx={{ my: 1 }} flexWrap="wrap">
                         {
                             blog?.tag &&
                             blog?.tag?.map(tag => (

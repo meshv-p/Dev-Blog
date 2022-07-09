@@ -1,6 +1,7 @@
 import { Container, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import { Blog } from '../src/compo/Blogs';
+import { SEO } from '../src/compo/SEO';
 import { useGlobal } from '../src/context/GlobalItemsProvider';
 // import blogContext from '../Context/BlogContext';
 // import { Blog } from '../Compo/Blog';
@@ -22,6 +23,11 @@ const SearchPage = () => {
 
     return (
         <>
+            <SEO
+                title={`${search} • Dev Blog`}
+                desc="Dev Blog, where people get perfect words"
+                kw="Blog | Dev Blog | ideas | content"
+            />
             <Container sx={{ m: 2 }}>
                 {/* <Head title={`${search} • Dev Blog`} /> */}
 

@@ -231,9 +231,13 @@ export const LeftSideBar = ({ data: users }) => {
     )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req, res }) {
+    res.setHeader(
+        "Cache-Control",
+        "public, s-maxage=10, stale-while-revalidate=59"
+    );
     // export async function getStaticProps() {
-    const res = await fetch(
+    const resOfChat = await fetch(
         `https://mernblog.azurewebsites.net/api/v1/chats/friendlist`, {
         method: 'POST',
         body: JSON.stringify({
@@ -245,7 +249,7 @@ export async function getServerSideProps() {
     }
     );
 
-    const data = await res.json();
+    const data = await resOfChat.json();
 
     // Pass data to the page via props
     return { props: { data } };

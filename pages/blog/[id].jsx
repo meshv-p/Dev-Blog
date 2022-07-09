@@ -20,6 +20,7 @@ import { useGlobal } from '../../src/context/GlobalItemsProvider';
 import { UserAvatar } from '../../src/compo/UserAvatar';
 import { useAuth } from '../../src/context/AuthenticationProvider';
 import EditIcon from '@mui/icons-material/Edit';
+import { SEO } from '../../src/compo/SEO';
 
 const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
     let { setTopBarProgress, URL } = useGlobal()
@@ -121,7 +122,12 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
 
 
     return (
-        <div  >
+        <>
+            <SEO
+                title={`${blog?.title} by ${blog?.user.username} - Dev Blog`}
+                desc={`${(blog?.desc).slice(0, 50)} - Dev Blog`}
+                kw={`#${blog?.tag?.[0]} , #${blog?.tag?.[1]} - Dev Blog`}
+            />
             {/* <Head title={`${blog?.title} by ${blog?.user.username} - Dev Blog`} /> */}
             <Container sx={{ py: 2 }}>
                 {/* {
@@ -190,11 +196,11 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                             <Typography variant='h4'>
                                 {blog.title}
                                 {/* <Typography>#tag</Typography> */}
-                                <Stack direction="row" gap={2} sx={{ my: 1 }}>
+                                <Stack direction="row" gap={2} sx={{ my: 1 }} flexWrap="wrap">
                                     {
                                         blog?.tag?.map(tag => (
                                             // <React.Fragment key={tag}>
-                                            <Link href='/' key={tag}>
+                                            <Link href={`/t/${tag}`} key={tag}>
                                                 <Typography component="span" sx={{ cursor: 'pointer', padding: .8, border: 1, borderColor: stringToColor(tag), borderRadius: 1, ":hover": { background: hexToHsl(stringToColor(tag)) }, }}>
                                                     <span  ># </span>
                                                     <span style={{ color: stringToColor(tag) }}>{tag} </span>
@@ -286,7 +292,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
             </Container>
 
 
-        </div >
+        </ >
     )
 }
 
@@ -294,14 +300,18 @@ export default BlogDetail
 
 export async function getServerSideProps(context) {
     const { id } = context.query
+    context.res.setHeader(
+        "Cache-Control",
+        "public, s-maxage=10, stale-while-revalidate=59"
+    );
     // export async function getStaticProps() {
-    const res = await fetch(
+    const resOfBlog = await fetch(
         `https://mernblog.azurewebsites.net/api/v1/blog/${id}`
     );
     const commentRes = await fetch(
         `https://mernblog.azurewebsites.net/api/v1/comment/${id}/?page=1`
     );
-    const blog = await res.json();
+    const blog = await resOfBlog.json();
     const comments = await commentRes.json();
 
 

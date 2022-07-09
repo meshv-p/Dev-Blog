@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, Container, CssBaseline, Skeleton, Typogr
 import { stringToColor } from '../../src/utils/commonFunctioins';
 import { Blog } from '../../src/compo/Blogs';
 import { useRouter } from 'next/router';
+import { SEO } from '../../src/compo/SEO';
 
 const TagWiseBlog = ({ tags: { result: tags } }) => {
     // const [searchData, setSearchData] = useState(tags)
@@ -30,6 +31,11 @@ const TagWiseBlog = ({ tags: { result: tags } }) => {
 
     return (
         <>
+            <SEO
+                title={`#${tag} - Dev Blog`}
+                desc="Dev Blog, where people get perfect words"
+                kw={`#${tag} |  Blog | Dev Blog | ideas | content`}
+            />
             <Container maxWidth='lg' sx={{ p: 1 }}>
                 {/* <Head title={`#${tag} - Dev Blog`} /> */}
                 <Card sx={{ minWidth: 275 }}>

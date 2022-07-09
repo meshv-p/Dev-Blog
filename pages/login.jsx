@@ -13,6 +13,7 @@ import { useGlobal } from '../src/context/GlobalItemsProvider';
 // import { Head } from '../Compo/Head';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../src/context/AuthenticationProvider';
+import { SEO } from '../src/compo/SEO';
 
 
 const Login = () => {
@@ -23,6 +24,7 @@ const Login = () => {
     const [loginError, setLoginError] = useState(null)
     const [open, setOpen] = React.useState(false);
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
 
     useEffect(() => {
@@ -67,6 +69,13 @@ const Login = () => {
 
 
     }
+
+    useEffect(() => {
+        // Prefetch the dashboard page
+        router.prefetch('/')
+    }, [])
+
+
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -84,6 +93,11 @@ const Login = () => {
 
     return (
         <>
+            <SEO
+                title="Login to Dev blog"
+                desc="Dev Blog, where people get perfect words"
+                kw="Blog | Dev Blog | ideas | content"
+            />
             <Container component="main" maxWidth="xs">
                 {/* <Head title='Login to Dev blog' /> */}
                 <Box

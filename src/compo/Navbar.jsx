@@ -38,7 +38,7 @@ import { useFetch } from '../hooks/useFetch';
 import { useAuth } from '../context/AuthenticationProvider';
 
 export const Navbar = () => {
-    let { toggleTheme, URL } = useGlobal();
+    let { toggleTheme, URL, theme } = useGlobal();
     let { logginUserData } = useAuth()
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [currentUser, setCurrentUser] = useState([])
@@ -100,6 +100,110 @@ export const Navbar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
+
+                    {/* Swipable  */}
+                    <SwipeableDrawer
+                        onOpen={() => setIsDrawerOpen(true)}
+                        open={isDrawerOpen}
+                        onClose={() => setIsDrawerOpen(false)}
+                    >
+                        <Box p={2}>
+                            <Typography variant="h6" noWrap>
+                                Dev Blog
+                            </Typography>
+                        </Box>
+                        <Divider />
+                        {/* List with icons */}
+                        <List >
+                            <Link href="/" >
+                                <ListItem button key="Home" sx={{
+                                    borderRadius: '8px', ":hover": {
+                                        backgroundColor: 'rgb(79 92 174 / 60%)  '
+                                    }
+                                }} onClick={() => setIsDrawerOpen(false)}>
+                                    <ListItemIcon>
+                                        <HomeRoundedIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Home" />
+                                </ListItem>
+                            </Link>
+
+                            {/* Chat  */}
+                            <Link href="/chat">
+                                <ListItem button key="Create" sx={{
+                                    borderRadius: '8px', ":hover": {
+                                        backgroundColor: 'rgb(79 92 174 / 60%)  '
+                                    }
+                                }} onClick={() => setIsDrawerOpen(false)}>
+                                    <ListItemIcon>
+                                        <ChatBubble />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Chat" />
+                                </ListItem>
+                            </Link>
+                            {/* create a blog  */}
+                            <Link href="/create">
+                                <ListItem button key="Create" sx={{
+                                    borderRadius: '8px', ":hover": {
+                                        backgroundColor: 'rgb(79 92 174 / 60%)  '
+                                    }
+                                }} onClick={() => setIsDrawerOpen(false)}>
+                                    <ListItemIcon>
+                                        <AddCircleIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Create" />
+                                </ListItem>
+                            </Link>
+
+
+                            {/* toggle dark theme */}
+                            <ListItem button key="Toggle" sx={{
+                                borderRadius: '8px', ":hover": {
+                                    backgroundColor: 'rgb(79 92 174 / 60%)  '
+                                }
+                            }} onClick={() => toggleTheme()} >
+                                <ListItemIcon>
+                                    <Brightness4Icon />
+                                </ListItemIcon>
+                                <ListItemText primary={`${!theme ? 'Light' : 'Dark'} Theme`} />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        {/* Profile  */}
+                        <Link href={`/user/${logginUserData?.profile?._id}`}>
+                            <ListItem button key="Profile" sx={{
+                                borderRadius: '8px', ":hover": {
+                                    backgroundColor: 'rgb(79 92 174 / 60%)  '
+                                }
+                            }} onClick={() => setIsDrawerOpen(false)}>
+                                <ListItemIcon>
+                                    <UserAvatar src={logginUserData?.profile?.Profile_pic} name={logginUserData?.profile?.username} />
+                                </ListItemIcon>
+                                <ListItemText primary={logginUserData?.profile?.username} />
+                            </ListItem>
+                        </Link>
+                        <List>
+                            <Link href="/login">
+                                <ListItem button key="Logout" sx={{
+                                    borderRadius: '8px', ":hover": {
+                                        backgroundColor: 'rgb(79 92 174 / 60%)  '
+                                    }
+                                }} onClick={() => {
+                                    sessionStorage.removeItem('user');
+                                    localStorage.removeItem('user');
+                                    setCurrentUser(null);
+                                    setAnchorElUser(null)
+                                }}>
+                                    <ListItemText primary="Logout" />
+                                </ListItem>
+                            </Link>
+                        </List>
+
+
+
+                    </SwipeableDrawer>
+
+
                     <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
                         {/*<img src={LOGO} alt="Dev-Blog" style={{width:'auto',height:'auto'}}/>*/}
 

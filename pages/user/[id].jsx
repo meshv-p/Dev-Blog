@@ -25,6 +25,7 @@ import { SkeletonPage } from "../../src/compo/SkeletonPage";
 import { stringToColor } from "../../src/utils/commonFunctioins";
 import { useRouter } from "next/router";
 import { useAuth } from "../../src/context/AuthenticationProvider";
+import { SEO } from "../../src/compo/SEO";
 
 const UserProfile = ({ profile }) => {
     // const context = useContext(blogContext);
@@ -133,6 +134,11 @@ const UserProfile = ({ profile }) => {
 
     return (
         <>
+            <SEO
+                title={`${profile?.name ?? ""} || @${profile?.username ?? ""} || Dev Blog Profile`}
+                desc={`${profile.username} About.`}
+                kw="Blog | Dev Blog | ideas | content"
+            />
             {/* <Head title={`${profile?.name ?? ""} || @${profile?.username ?? ""} || Dev Blog Profile`} /> */}
             <Container sx={{ mt: 3 }} component="main">
                 <Paper sx={{ p: 2 }}>

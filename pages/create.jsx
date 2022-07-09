@@ -16,6 +16,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import MuiAlert from '@mui/material/Alert';
 import { useRouter } from 'next/router';
 import { Editor } from '@tinymce/tinymce-react';
+import { SEO } from '../src/compo/SEO';
 // import { Head } from '../Compo/Head';
 
 // uncontrolled input
@@ -151,6 +152,11 @@ const CreateBlog = () => {
 
     return (
         <>
+            <SEO
+                title='Make New Blog - Dev Blog'
+                desc="Dev Blog, where people get perfect words"
+                kw="Blog | Dev Blog | ideas | create a blog"
+            />
             <Container>
                 {/* <Head title='Make New Blog - Dev Blog' /> */}
 

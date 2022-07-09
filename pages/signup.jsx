@@ -14,6 +14,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Alert, Snackbar } from '@mui/material';
 import Link from 'next/link';
 import { useGlobal } from '../src/context/GlobalItemsProvider';
+import { SEO } from '../src/compo/SEO';
 // import { Head } from '../Compo/Head';
 
 const Signup = () => {
@@ -74,7 +75,12 @@ const Signup = () => {
         setOpen(false);
     };
     return (
-        <div>
+        <>
+            <SEO
+                title="Make a new account on Dev Blog"
+                desc="Dev Blog, where people get perfect words"
+                kw="Blog | Dev Blog | ideas | content"
+            />
             <Container component="main" maxWidth="xs">
                 {/* <Head title='Make a new account on Dev Blog' /> */}
 
@@ -187,7 +193,7 @@ const Signup = () => {
                     </Alert>
                 </Snackbar>
             </Container>
-        </div>
+        </>
     )
 }
 
