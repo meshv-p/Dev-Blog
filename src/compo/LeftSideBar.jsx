@@ -144,7 +144,7 @@ export const LeftSideBar = ({ data: users }) => {
 
         console.log(isLaptop);
         if (!isLaptop) {
-            history(`/dm/${logginUserData.following[index]._id}`)
+            history.push(`/dm/${list[index]._id}`)
         }
 
     }

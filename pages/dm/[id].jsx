@@ -11,18 +11,18 @@ import {
     Typography
 } from '@mui/material'
 import React, { useCallback, useEffect, useState } from 'react'
-import { UserAvatar } from './UserAvatar'
+import { UserAvatar } from '../../src/compo/UserAvatar'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { timeAgo } from '../utils/timeAgo'
-import { Spinner } from "./Spinner";
+import { timeAgo } from '../../src/utils/timeAgo'
+import { Spinner } from "../../src/compo/Spinner";
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
-import { useMediaQuery } from '../hooks/useMediaQuery'
+import { useMediaQuery } from '../../src/hooks/useMediaQuery'
 import { useRouter } from 'next/router';
-import { useConversations } from '../context/ConversatioinsProvider';
-import { useSocket } from '../context/socketProider';
-import { useAuth } from '../context/AuthenticationProvider';
+import { useConversations } from '../../src/context/ConversatioinsProvider';
+import { useSocket } from '../../src/context/socketProider';
+import { useAuth } from '../../src/context/AuthenticationProvider';
 
-export const ChatScreen = () => {
+const ChatScreen = () => {
     let { logginUserData } = useAuth()
     const [message, setMessage] = React.useState('')
     const [isLoading, setIsLoading] = useState(true);
@@ -240,7 +240,6 @@ export const ChatScreen = () => {
 
                                                 <ListItemText primary={msg.message}
                                                     secondary={
-                                                        // msg.sender === logginUserData.profile._id &&
                                                         <Stack direction='row' alignItems='center' gap={1}>
                                                             <Typography fontSize='10px'>
                                                                 {/* {timeAgo(msg.createdAt || new Date())} */}
@@ -250,10 +249,12 @@ export const ChatScreen = () => {
                                                                 })}
 
                                                             </Typography>
-                                                            <Typography color={msg.hasUserRead ? 'green' : ""}
-                                                                align='right' fontSize='10px'>
-                                                                ✔✔
-                                                            </Typography>
+                                                            {msg.sender === logginUserData.profile._id &&
+
+                                                                <Typography color={msg.hasUserRead ? 'green' : ""}
+                                                                    align='right' fontSize='10px'>
+                                                                    ✔✔
+                                                                </Typography>}
                                                         </Stack>
                                                     }
 
@@ -311,3 +312,6 @@ export const ChatScreen = () => {
         </>
     )
 }
+
+
+export default ChatScreen
