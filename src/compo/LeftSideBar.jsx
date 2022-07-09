@@ -17,12 +17,14 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useRouter } from 'next/router';
 import { useAuth } from '../context/AuthenticationProvider';
+import { useGlobal } from '../context/GlobalItemsProvider';
 // import { useNavigate } from 'react-router-dom';
 
 export const LeftSideBar = ({ data: users }) => {
     let { isLaptop } = useMediaQuery()
     const [list, setList] = useState(null)
     let { logginUserData } = useAuth()
+    let { theme } = useGlobal()
     // let user = JSON.parse(localStorage.getItem('user'))
     const [isLoading, setIsLoading] = useState(true);
     let history = useRouter()
