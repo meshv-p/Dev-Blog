@@ -42,7 +42,7 @@ const TagWiseBlog = ({ tags: { result: tags } }) => {
                             #  {tag}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            Official tag for Facebook's React JavaScript library for building user interfaces
+                            Official tag for Facebooks React JavaScript library for building user interfaces
 
                         </Typography>
                     </CardContent>
