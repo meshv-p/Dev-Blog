@@ -23,7 +23,7 @@ const Chat = () => {
     useEffect(() => {
         // console.log(user)
         if (logginUserData === null) {
-            history('/login');
+            history.push('/login');
         }
         // console.log(isLaptop);
     }, [isLaptop])

@@ -66,7 +66,7 @@ export const ChatScreen = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                sender: JSON.parse(localStorage.getItem('user')).profile._id,
+                sender: JSON.parse(localStorage.getItem('user'))?.profile._id,
                 receiver: receiverId
             })
         }).then(res => res.json()).then(data => {

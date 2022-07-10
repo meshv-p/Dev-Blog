@@ -28,6 +28,15 @@ export const LeftSideBar = ({ data: users }) => {
     // let user = JSON.parse(localStorage.getItem('user'))
     const [isLoading, setIsLoading] = useState(true);
     let history = useRouter()
+
+
+    useEffect(() => {
+        // console.log(user)
+        if (logginUserData === null) {
+            history.push('/login');
+        }
+        // console.log(isLaptop);
+    }, [])
     // let { data: list, error, isLoading } = useFetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/chats/friendlist`, {
     //     method: 'POST',
     //     body: JSON.stringify({
@@ -42,11 +51,14 @@ export const LeftSideBar = ({ data: users }) => {
     // let theme = JSON.parse(localStorage.getItem("Theme"));
 
     useEffect(() => {
+        if (localStorage.getItem('user') === null) {
+            history.push('/login');
+        }
         fetch(
             `https://mernblog.azurewebsites.net/api/v1/chats/friendlist`, {
             method: 'POST',
             body: JSON.stringify({
-                userId: JSON.parse(localStorage.getItem('user')).profile?._id
+                userId: JSON.parse(localStorage.getItem('user'))?.profile?._id
             }),
             headers: {
                 'Content-Type': 'application/json',

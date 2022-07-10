@@ -19,7 +19,7 @@ import Link from 'next/link';
 import { useGlobal } from '../context/GlobalItemsProvider';
 // import { Link, useNavigate } from 'react-router-dom';
 // import blogContext from '../Context/BlogContext';
-// import { AlertBar } from './Alert';
+import { AlertBar } from './Alert';
 // import { UserAvatar } from './UserAvatar';
 import { timeAgo } from "../utils/timeAgo";
 import { hexToHsl, stringToColor } from '../utils/commonFunctioins';
@@ -32,7 +32,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
     let { URL } = useGlobal()
     const [userLiked, setUserLiked] = useState(false)
     const [totalLike, setTotalLike] = useState(blog.totalLike)
-    // const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false)
     // const context = useContext(blogContext)
     // let { url, loggedinUser } = context;
 
@@ -78,7 +78,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
             method: 'POST',
             body: JSON.stringify({
                 "from": `${JSON.parse(localStorage.getItem('user')).profile._id}`,
-                "to": `${blog.user.user}`,
+                "to": `${blog.user._id}`,
                 "text": `has ${userLiked ? 'unliked' : 'liked'} your blog ${blog.title}.`
             }),
             headers: {
@@ -129,7 +129,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
         <>
             <Card elevation={3} component='div' sx={{ my: 2, cursor: 'pointer', border: `1px solid ${theme ? '#d9d9d9' : '#424242'}` }}
                 key={blog._id} raised={true}>
-                {/* <AlertBar open={open} msg="Login to like.." type='error' remove={removeAlert} /> */}
+                <AlertBar open={open} msg="Login to like.." type='error' remove={removeAlert} />
                 {
                     index === 0 &&
                     <CardMedia

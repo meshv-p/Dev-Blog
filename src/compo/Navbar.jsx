@@ -34,7 +34,6 @@ import { useRouter } from 'next/router';
 import { useGlobal } from '../context/GlobalItemsProvider';
 import { UserAvatar } from './UserAvatar';
 import { SearchBar } from './SearchBar';
-import { useFetch } from '../hooks/useFetch';
 import { useAuth } from '../context/AuthenticationProvider';
 
 export const Navbar = () => {
@@ -62,7 +61,10 @@ export const Navbar = () => {
             headers: {
                 'Authorization': `${JSON.parse(localStorage.getItem("user"))?.authToken}`
             }
+        }).then(res => res.json()).then(d => {
+            setData(d)
         });
+
         // console.log(JSON.parse(localStorage.getItem("user")));
         setCurrentUser(JSON.parse(localStorage.getItem("user"))?.profile)
 
@@ -75,7 +77,7 @@ export const Navbar = () => {
 
     function handleReadNoti(notiID) {
         setData(data?.filter(noti => noti._id !== notiID));
-        fetch(`${url}/api/v1/notification/`, {
+        fetch(`${URL}/api/v1/notification/`, {
             method: 'PATCH',
             body: JSON.stringify({
                 "id": `${notiID}`
@@ -170,34 +172,39 @@ export const Navbar = () => {
                         </List>
                         <Divider />
                         {/* Profile  */}
-                        <Link href={`/user/${logginUserData?.profile?._id}`}>
-                            <ListItem button key="Profile" sx={{
-                                borderRadius: '8px', ":hover": {
-                                    backgroundColor: 'rgb(79 92 174 / 60%)  '
-                                }
-                            }} onClick={() => setIsDrawerOpen(false)}>
-                                <ListItemIcon>
-                                    <UserAvatar src={logginUserData?.profile?.Profile_pic} name={logginUserData?.profile?.username} />
-                                </ListItemIcon>
-                                <ListItemText primary={logginUserData?.profile?.username} />
-                            </ListItem>
-                        </Link>
-                        <List>
-                            <Link href="/login">
-                                <ListItem button key="Logout" sx={{
-                                    borderRadius: '8px', ":hover": {
-                                        backgroundColor: 'rgb(79 92 174 / 60%)  '
-                                    }
-                                }} onClick={() => {
-                                    sessionStorage.removeItem('user');
-                                    localStorage.removeItem('user');
-                                    setCurrentUser(null);
-                                    setAnchorElUser(null)
-                                }}>
-                                    <ListItemText primary="Logout" />
-                                </ListItem>
-                            </Link>
-                        </List>
+
+                        {logginUserData &&
+                            <>
+                                <Link href={`/user/${logginUserData?.profile?._id}`}>
+                                    <ListItem button key="Profile" sx={{
+                                        borderRadius: '8px', ":hover": {
+                                            backgroundColor: 'rgb(79 92 174 / 60%)  '
+                                        }
+                                    }} onClick={() => setIsDrawerOpen(false)}>
+                                        <ListItemIcon>
+                                            <UserAvatar src={logginUserData?.profile?.Profile_pic} name={logginUserData?.profile?.username} />
+                                        </ListItemIcon>
+                                        <ListItemText primary={logginUserData?.profile?.username} />
+                                    </ListItem>
+                                </Link>
+                                <Link href="/">
+                                    <ListItem button key="Logout" sx={{
+                                        borderRadius: '8px', ":hover": {
+                                            backgroundColor: 'rgb(79 92 174 / 60%)  '
+                                        }
+                                    }} onClick={() => {
+                                        sessionStorage.removeItem('user');
+                                        localStorage.removeItem('user');
+                                        setCurrentUser(null);
+                                        setAnchorElUser(null)
+                                        window.location.reload();
+                                    }}>
+                                        <ListItemText primary="Logout" />
+                                    </ListItem>
+                                </Link>
+
+                            </>
+                        }
 
 
 
@@ -207,7 +214,7 @@ export const Navbar = () => {
                     <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
                         {/*<img src={LOGO} alt="Dev-Blog" style={{width:'auto',height:'auto'}}/>*/}
 
-                        <Typography sx={{ display: { xs: 'none', md: 'flex' } }}>Dev Blog</Typography>
+                        <Typography sx={{ display: { xs: 'none', md: 'flex' }, cursor: 'pointer' }}>Dev Blog</Typography>
                     </Link>
                     <SearchBar />
 
@@ -276,7 +283,7 @@ export const Navbar = () => {
                                                 <ListItemAvatar>
                                                     <Avatar>
                                                         <UserAvatar src={noti.from[0].Profile_pic}
-                                                            name={noti.from[0].username} /> *
+                                                            name={noti.from[0].username} />
                                                     </Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText
@@ -347,6 +354,8 @@ export const Navbar = () => {
                                         localStorage.removeItem('user');
                                         setCurrentUser(null);
                                         setAnchorElUser(null)
+                                        window.location.reload();
+                                        history.push('/');
                                     }}>
                                         <Typography>Logout</Typography>
                                     </MenuItem>
