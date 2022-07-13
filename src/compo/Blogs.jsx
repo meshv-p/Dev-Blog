@@ -20,7 +20,7 @@ import { useGlobal } from '../context/GlobalItemsProvider';
 // import { Link, useNavigate } from 'react-router-dom';
 // import blogContext from '../Context/BlogContext';
 import { AlertBar } from './Alert';
-// import { UserAvatar } from './UserAvatar';
+import { UserAvatar } from './UserAvatar';
 import { timeAgo } from "../utils/timeAgo";
 import { hexToHsl, stringToColor } from '../utils/commonFunctioins';
 import { useRouter } from 'next/router';
@@ -148,7 +148,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
                     sx={{ ":hover": { background: !theme ? '#424242' : "#d9d9d9" } }}
                     onClick={e => openProfile(e)} data-key={blog.user?._id || blog?._id}
                     avatar={
-                        <Avatar src={blog.user?.Profile_pic || blog?.Profile_pic}
+                        <UserAvatar src={blog.user?.Profile_pic || blog?.Profile_pic}
                             name={(blog.user?.username || blog.username) ?? 'User'} />
                     }
                     title={blog.user?.username || blog?.username}

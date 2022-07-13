@@ -17,6 +17,8 @@ import MuiAlert from '@mui/material/Alert';
 import { useRouter } from 'next/router';
 import { Editor } from '@tinymce/tinymce-react';
 import { SEO } from '../src/compo/SEO';
+import { useGlobal } from '../src/context/GlobalItemsProvider';
+import { useAuth } from '../src/context/AuthenticationProvider';
 // import { Head } from '../Compo/Head';
 
 // uncontrolled input
@@ -24,7 +26,8 @@ import { SEO } from '../src/compo/SEO';
 const CreateBlog = () => {
     // const context = useContext(blogContext);
     let blogHistory = window.history.state.usr?.blog;
-    // let { url, loggedinUser } = context;
+    let { URL } = useGlobal();
+    let { logginUserData } = useAuth()
     const [open, setOpen] = React.useState(false);
     const [blogError, setBlogError] = useState(null)
     const [blog, setBlog] = useState({
@@ -49,16 +52,16 @@ const CreateBlog = () => {
     const blogUpdate = async () => {
         let res;
         try {
-            res = await fetch(`${url}/api/v1/blog/${blogHistory._id}`, {
+            res = await fetch(`${URL}/api/v1/blog/${blogHistory._id}`, {
                 method: 'PATCH',
                 body: JSON.stringify(blog),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `${loggedinUser.authToken}`
+                    'Authorization': `${logginUserData.authToken}`
                 },
             })
         } catch (e) {
-            // console.log(e.message, typeof e)
+            console.log(e.message, typeof e)
             setOpen(true)
             setBlogError({ type: "error", msg: 'Login to post blog...' })
         }
@@ -79,7 +82,8 @@ const CreateBlog = () => {
     }
 
     const handleSubmit = async () => {
-        if (blogHistory._id !== null || (blogHistory._id !== undefined)) {
+        if (blogHistory !== undefined) {
+            console.log('com', blogHistory);
             return blogUpdate()
         }
         await console.log('before', blog);
@@ -89,12 +93,12 @@ const CreateBlog = () => {
         await console.log('after', blog);
         let res;
         try {
-            res = await fetch(`${url}/api/v1/blogs`, {
+            res = await fetch(`${URL}/api/v1/blogs`, {
                 method: 'POST',
                 body: JSON.stringify(blog),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `${loggedinUser.authToken}`
+                    'Authorization': `${logginUserData.authToken}`
                 }
             })
         } catch (e) {
@@ -112,7 +116,7 @@ const CreateBlog = () => {
                 title: "", desc: "",
                 tag: []
             })
-            history('/')
+            history.push('/')
         } else {
 
             setBlogError({ type: "error", msg: status.msg })
@@ -139,12 +143,12 @@ const CreateBlog = () => {
     const tagSuggestion = async (e, value) => {
         console.log(value);
         console.log(e);
-        await fetch(`${url}/api/v1/tag/s`, {
+        await fetch(`${URL}/api/v1/tag/s`, {
             method: 'POST',
             body: JSON.stringify({ tag: e.target.value }),
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `${loggedinUser.authToken}`
+                'Authorization': `${logginUserData.authToken}`
             }
         }).then(res => res.json()).then(data => setTagSuggestions(data))
 

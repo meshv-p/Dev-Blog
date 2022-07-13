@@ -8,8 +8,6 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 // import { Spinner } from './Spinner';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 // import InfiniteScroll from 'react-infinite-scroll-component';
-// import { UserAvatar } from './UserAvatar';
-// import { useFetch } from '../hooks/useFetch';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 // import { Head } from './Head';
 import { timeAgo } from "../../src/utils/timeAgo";
@@ -21,6 +19,7 @@ import { UserAvatar } from '../../src/compo/UserAvatar';
 import { useAuth } from '../../src/context/AuthenticationProvider';
 import EditIcon from '@mui/icons-material/Edit';
 import { SEO } from '../../src/compo/SEO';
+import styles from "../../styles/Home.module.css";
 
 const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
     let { setTopBarProgress, URL } = useGlobal()
@@ -158,7 +157,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                         </Typography>
                         <CardHeader
                             avatar={
-                                <Avatar src={blog.user?.Profile_pic} name={blog.user?.username ?? 'User'} />
+                                <UserAvatar src={blog.user?.Profile_pic} name={blog.user?.username ?? 'User'} />
 
                             }
 
@@ -216,7 +215,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                                 {/* {blog.title} */}
                             </Typography>
                             <span>
-                                <Typography variant='body2' dangerouslySetInnerHTML={{ __html: blog.desc }} sx={{ my: 2 }} >
+                                <Typography dangerouslySetInnerHTML={{ __html: blog.desc }} sx={{ my: 2 }} >
                                 </Typography>
                             </span>
 
