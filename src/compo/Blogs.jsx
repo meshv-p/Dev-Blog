@@ -25,6 +25,8 @@ import { timeAgo } from "../utils/timeAgo";
 import { hexToHsl, stringToColor } from '../utils/commonFunctioins';
 import { useRouter } from 'next/router';
 import { useAuth } from '../context/AuthenticationProvider';
+import Image from 'next/image';
+import { Spinner } from './Spinner'
 
 
 export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
@@ -40,7 +42,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
 
 
     useEffect(() => {
-        console.log(index);
+        // console.log(index);
         //     // console.log(typeof localStorage.getItem('user'), typeof blog?.like[0]);
         let userId = JSON.parse(localStorage.getItem('user'))?.profile?._id;
         //     // console.log(blog.like?.includes(userId))
@@ -61,7 +63,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
     // }
     const openProfile = (e) => {
         let id = e.currentTarget.dataset.key;
-        history.push(`/user/${id}`);
+        history.push(`/user/${id}`, undefined, { shallow: true });
     }
 
 
@@ -100,7 +102,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
     }
 
     function goToBlogComment() {
-        history.push(`/blog/${blog._id}#Comments`)
+        history.push(`/blog/${blog._id}#Comments`, undefined, { shallow: true })
     }
 
     const removeAlert = () => {
@@ -127,7 +129,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
 
     return (
         <>
-            <Card elevation={3} component='div' sx={{ my: 2, cursor: 'pointer', border: `1px solid ${theme ? '#d9d9d9' : '#424242'}` }}
+            <Card elevation={3} component='div' sx={{ my: 1, cursor: 'pointer', border: `1px solid ${theme ? '#d9d9d9' : '#424242'}`, ":focus": { borderColor: '#42a5f5' } }}
                 key={blog._id} raised={true}>
                 <AlertBar open={open} msg="Login to like.." type='error' remove={removeAlert} />
                 {
@@ -135,12 +137,13 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
                     <CardMedia
                         component="img"
                         alt="green iguana"
-                        height="440"
-                        image={`https://source.unsplash.com/random/?${blog?.tag[0]},${blog?.tag[1]},web`}
+                        height="240"
+                        image={`https://source.unsplash.com/random/?${blog?.tag[0]},${blog?.tag[1]},html`}
                         loading='lazy'
                         decoding='async'
                     />
                 }
+                {/* <Image src={`https://source.unsplash.com/random/?${blog?.tag[0]},${blog?.tag[1]},web`} alt='pic' width={500} height={200} loading='lazy' blurDataURL={rgbDataURL(237, 181, 6)} /> */}
                 <CardHeader
                     sx={{ ":hover": { background: !theme ? '#424242' : "#d9d9d9" } }}
                     onClick={e => openProfile(e)} data-key={blog.user?._id || blog?._id}
@@ -152,8 +155,8 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
                     // subheader={blog.createdAt}
                     subheader={timeAgo(blog?.createdAt) + ' ago'}
                 />
-                <CardContent sx={{ cursor: 'pointer' }} data-key={blog._id}>
-                    <Link href={`/blog/${blog._id}`} scroll={false} >
+                <CardContent sx={{ cursor: 'pointer', ":focus": { borderColor: 'red' } }} data-key={blog._id}>
+                    <Link href={`/blog/${blog._id}`} scroll={true} >
                         <Typography variant='body1' sx={{
                             ":hover": {
                                 color: 'blue'
@@ -175,19 +178,21 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
                             blog?.tag &&
                             blog?.tag?.map(tag => (
                                 <React.Fragment key={tag}>
-                                    <Link href={`/t/${tag}`}>
-                                        <Typography component="span" sx={{
-                                            cursor: 'pointer',
-                                            padding: .8,
-                                            border: 1,
-                                            borderColor: stringToColor(tag),
-                                            borderRadius: 1,
-                                            ":hover": { background: hexToHsl(stringToColor(tag)) }
-                                        }}>
-                                            <span># </span>
-                                            <span style={{ color: stringToColor(tag) }}>{tag} </span>
-                                        </Typography>
-                                    </Link>
+                                    <Typography component="span" sx={{
+                                        cursor: 'pointer',
+                                        padding: .5,
+                                        border: 1,
+                                        borderColor: stringToColor(tag),
+                                        borderRadius: 1,
+                                        ":hover": { background: hexToHsl(stringToColor(tag)) }
+                                    }}>
+                                        <Link href={`/t/${tag}`}>
+                                            <>
+                                                <span># </span>
+                                                <span style={{ color: stringToColor(tag) }}>{tag} </span>
+                                            </>
+                                        </Link>
+                                    </Typography>
                                 </React.Fragment>
                             ))
                         }

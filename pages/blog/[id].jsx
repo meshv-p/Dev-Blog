@@ -129,7 +129,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                 kw={`#${blog?.tag?.[0]} , #${blog?.tag?.[1]} - Dev Blog`}
             />
             {/* <Head title={`${blog?.title} by ${blog?.user.username} - Dev Blog`} /> */}
-            <Container sx={{ py: 2 }}>
+            <Container sx={{ py: 2, px: 0 }}>
                 {/* {
                         isLoading && <Spinner />
                     } */}
@@ -169,7 +169,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                             }
                             // subheader={new Date(blog.createdAt).toLocaleString()}
                             // subheader='ago'
-                            subheader={`${timeAgo(blog.createdAt)} ago`}
+                            subheader={`Posted ${timeAgo(blog.createdAt)} ago`}
 
                             action={
                                 // blog?.user?._id === loggedinUser?.profile._id &&
@@ -191,17 +191,19 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                             loading='lazy'
                             decoding='async'
                         />
-                        <CardContent >
+                        <CardContent sx={{ px: '10px' }}>
 
                             <Typography variant='h4'>
                                 {blog.title}
                                 {/* <Typography>#tag</Typography> */}
-                                <Stack direction="row" gap={2} sx={{ my: 1 }} flexWrap="wrap">
+                                <Stack direction="row" gap={1.1} sx={{ my: 1 }} flexWrap="wrap">
                                     {
                                         blog?.tag?.map(tag => (
                                             // <React.Fragment key={tag}>
                                             <Link href={`/t/${tag}`} key={tag}>
-                                                <Typography component="span" sx={{ cursor: 'pointer', padding: .8, border: 1, borderColor: stringToColor(tag), borderRadius: 1, ":hover": { background: hexToHsl(stringToColor(tag)) }, }}>
+                                                <Typography component="span" sx={{
+                                                    cursor: 'pointer', padding: .5, border: 1, borderColor: stringToColor(tag), borderRadius: 1, ":hover": { background: hexToHsl(stringToColor(tag)) }
+                                                }}>
                                                     <span  ># </span>
                                                     <span style={{ color: stringToColor(tag) }}>{tag} </span>
                                                     {/* <span >{tag} </span> */}
@@ -214,7 +216,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                                 {/* {blog.title} */}
                             </Typography>
                             <span>
-                                <Typography variant='body2' dangerouslySetInnerHTML={{ __html: blog.desc }} sx={{ my: 2 }} color="text.secondary">
+                                <Typography variant='body2' dangerouslySetInnerHTML={{ __html: blog.desc }} sx={{ my: 2 }} >
                                 </Typography>
                             </span>
 
@@ -250,7 +252,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
 
                             {/* comment part */}
                             {comment && comment?.map(c => (
-                                <Paper variant="outlined" sx={{ m: 2 }} key={c._id}>
+                                <Paper variant="outlined" sx={{ m: 1, border: 1, borderColor: 'text.secondary' }} key={c._id}>
                                     <Card>
                                         <CardHeader
                                             avatar={

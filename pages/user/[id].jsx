@@ -40,7 +40,7 @@ const UserProfile = ({ profile }) => {
     // let { data: profile, isLoading, setData } = useFetch(`${url}/api/v1/users/${userId}`)
 
     useEffect(() => {
-        console.log(profile);
+        console.log(profile, logginUserData);
         //     // if (!JSON.parse(localStorage.getItem("user")) && !sessionStorage.getItem("user")) {
         //     //     console.log('Not logged in')
         //     //     return history('/login')
@@ -50,7 +50,7 @@ const UserProfile = ({ profile }) => {
         //     // a.find(({user})=>user === '6245cdd699b2268d8bccc4ce')
 
         //     // profile && console.log((profile?.followers)?.find(({user}) => user === loggedinUser?.profile.user), 'current user is following?');
-        //     // profile && setFollow((profile?.followers)?.find(({ user }) => user === loggedinUser?.profile.user))
+        profile && setFollow((profile?.followers)?.find(({ _id }) => _id === logginUserData?.profile._id))
 
         //     // eslint-disable-next-line
     }, []);
@@ -66,7 +66,7 @@ const UserProfile = ({ profile }) => {
 
     const followUser = () => {
         setFollow(!follow);
-        fetch(`${url}/api/v1/notification/`, {
+        fetch(`${URL}/api/v1/notification/`, {
             method: "POST",
             body: JSON.stringify({
                 from: `${JSON.parse(localStorage.getItem("user")).profile._id}`,
@@ -83,11 +83,11 @@ const UserProfile = ({ profile }) => {
             .then((res) => res.json())
             .then((data) => console.log(data));
 
-        fetch(`${url}/api/v1/users/friends/${userId}`, {
+        fetch(`${URL}/api/v1/users/friends/${userId}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `${loggedinUser.authToken}`,
+                Authorization: `${logginUserData.authToken}`,
             },
         })
             .then((res) => res.json())

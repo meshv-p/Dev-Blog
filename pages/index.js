@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Blog } from "../src/compo/Blogs";
 import { useGlobal } from "../src/context/GlobalItemsProvider";
-import styles from "../styles/Home.module.css";
 import { Container } from "@mui/material";
 import { useAuth } from "../src/context/AuthenticationProvider";
 import { useRouter } from "next/router";
@@ -30,7 +29,7 @@ export default function Home({ data: { allBlogs } }) {
         kw="Blog | Dev Blog | ideas | content"
       />
 
-      <Container sx={{ pt: 2 }}>
+      <Container sx={{ pt: 1, px: 0 }}>
         <React.Suspense fallback="Loading...">
           {/* make dynamic */}
 
@@ -39,9 +38,6 @@ export default function Home({ data: { allBlogs } }) {
               <Blog blog={blog} key={index} index={index} theme={theme} />
             ))}
         </React.Suspense>
-        <footer className={styles.footer}>
-          All Rights reserved by Dev Blog
-        </footer>
       </Container>
     </>
   );

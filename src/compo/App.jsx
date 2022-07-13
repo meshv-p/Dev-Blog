@@ -9,6 +9,7 @@ import { Router } from 'next/router';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { SocketProvider } from "../context/socketProider";
 import { ConversatioinsProvider } from '../context/ConversatioinsProvider';
+import styles from "../../styles/Home.module.css";
 
 export const App = ({ Component, pageProps }) => {
     let { darkTheme, topBarProgress, setTopBarProgress } = useGlobal()
@@ -16,7 +17,7 @@ export const App = ({ Component, pageProps }) => {
     useEffect(() => {
 
         const start = () => {
-            console.log("start");
+            // console.log("start", e, p);
             setTopBarProgress(10)
 
             // setLoading(true);
@@ -27,7 +28,7 @@ export const App = ({ Component, pageProps }) => {
             console.log("findished");
             // setLoading(false);
         };
-        Router.events.on("routeChangeStart", start);
+        Router.events.on("routeChangeStar", start);
         Router.events.on("routeChangeComplete", end);
 
         return () => {
@@ -50,6 +51,9 @@ export const App = ({ Component, pageProps }) => {
                                 <React.Suspense fallback="loading">
                                     <Component {...pageProps} />
                                 </React.Suspense>
+                                <footer className={styles.footer}>
+                                    All Rights reserved by Dev Blog
+                                </footer>
                             </ThemeProvider>
                         </AuthenticationProvider>
                     </ConversatioinsProvider>
