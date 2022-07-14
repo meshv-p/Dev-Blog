@@ -50,7 +50,7 @@ export async function getServerSideProps({ req, res }) {
   );
   // export async function getStaticProps() {
   const resOfBlog = await fetch(
-    `https://mernblog.azurewebsites.net/api/v1/blogs/?page=1`
+    `https://mernblog.azurewebsites.net/api/v1/blogs`
   );
 
   const data = await resOfBlog.json();

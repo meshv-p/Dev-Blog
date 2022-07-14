@@ -170,7 +170,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                             subheader={`Posted ${timeAgo(blog.createdAt)} ago`}
 
                             action={
-                                // blog?.user?._id === loggedinUser?.profile._id &&
+                                blog?.user?._id === logginUserData?.profile._id &&
                                 <>
                                     <IconButton aria-label="settings" onClick={handleEdit}>
                                         <EditIcon />
@@ -188,6 +188,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                             image={`https://source.unsplash.com/random/?${blog?.tag[0]},${blog?.tag[1]},web`}
                             loading='lazy'
                             decoding='async'
+                        // {...'hi'}
                         />
                         <CardContent sx={{ px: '10px' }}>
 
