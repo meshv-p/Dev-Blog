@@ -51,11 +51,10 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
 
 
 
-    // useEffect(() => {
+    useEffect(() => {
+        // console.log(hljs);
 
-    //     blog && setProgress(100)
-
-    // }, [blog])
+    }, [])
 
 
 

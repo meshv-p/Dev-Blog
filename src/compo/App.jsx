@@ -17,7 +17,7 @@ export const App = ({ Component, pageProps }) => {
     useEffect(() => {
 
         const start = () => {
-            // console.log("start", e, p);
+            console.log("start");
             setTopBarProgress(10)
 
             // setLoading(true);
@@ -28,7 +28,7 @@ export const App = ({ Component, pageProps }) => {
             console.log("findished");
             // setLoading(false);
         };
-        Router.events.on("routeChangeStar", start);
+        Router.events.on("routeChangeStart", start);
         Router.events.on("routeChangeComplete", end);
 
         return () => {

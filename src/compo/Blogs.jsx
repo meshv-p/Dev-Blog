@@ -178,21 +178,21 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
                             blog?.tag &&
                             blog?.tag?.map(tag => (
                                 <React.Fragment key={tag}>
-                                    <Typography component="span" sx={{
-                                        cursor: 'pointer',
-                                        padding: .5,
-                                        border: 1,
-                                        borderColor: stringToColor(tag),
-                                        borderRadius: 1,
-                                        ":hover": { background: hexToHsl(stringToColor(tag)) }
-                                    }}>
-                                        <Link href={`/t/${tag}`}>
+                                    <Link href={`/t/${tag}`}>
+                                        <Typography component="span" sx={{
+                                            cursor: 'pointer',
+                                            padding: .5,
+                                            border: 1,
+                                            borderColor: stringToColor(tag),
+                                            borderRadius: 1,
+                                            ":hover": { background: hexToHsl(stringToColor(tag)) }
+                                        }}>
                                             <>
                                                 <span># </span>
                                                 <span style={{ color: stringToColor(tag) }}>{tag} </span>
                                             </>
-                                        </Link>
-                                    </Typography>
+                                        </Typography>
+                                    </Link>
                                 </React.Fragment>
                             ))
                         }
