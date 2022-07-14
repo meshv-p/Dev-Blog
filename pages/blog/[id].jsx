@@ -181,15 +181,14 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                                 </>
                             }
                         />
-                        <CardMedia
+                        {blog?.coverImg && <CardMedia
                             component="img"
                             alt="green iguana"
                             height="440"
-                            image={`https://source.unsplash.com/random/?${blog?.tag[0]},${blog?.tag[1]},web`}
+                            image={`${blog?.coverImg ?? `https://source.unsplash.com/random/?${blog?.tag[0]},${blog?.tag[1]},web`}  `}
                             loading='lazy'
                             decoding='async'
-                        // {...'hi'}
-                        />
+                        />}
                         <CardContent sx={{ px: '10px' }}>
 
                             <Typography variant='h4'>
