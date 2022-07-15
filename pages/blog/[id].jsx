@@ -22,7 +22,7 @@ import { SEO } from '../../src/compo/SEO';
 import styles from "../../styles/Home.module.css";
 
 const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
-    let { setTopBarProgress, URL } = useGlobal()
+    let { setEditBlog, URL } = useGlobal()
     const [comment, setComment] = useState(comments)
     // // const [isLoading, setIsLoading] = useState(false)
     const [commentByUser, setCommentByUser] = useState("")
@@ -52,7 +52,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
 
 
     useEffect(() => {
-        // console.log(hljs);
+        console.log(history);
 
     }, [])
 
@@ -72,12 +72,12 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
     }
 
     function handleEdit() {
-        // console.log(blog._id)
-        history.push(`/blog/edit/${blog._id}`, {
-            state: {
-                blog
-            }
-        })
+        console.log(blog._id)
+        // history.pushState = {
+        //     blog
+        // }
+        setEditBlog(blog)
+        history.push(`/blog/edit/${blog._id}`)
     }
 
 

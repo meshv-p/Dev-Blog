@@ -4,6 +4,10 @@ const nextConfig = {
   images: {
     domains: ["source.unsplash.com", "res.cloudinary.com"],
   },
+
+  devIndicators: {
+    buildActivityPosition: "bottom-right",
+  },
 };
 
 module.exports = nextConfig;

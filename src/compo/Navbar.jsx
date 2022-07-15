@@ -282,17 +282,17 @@ export const Navbar = () => {
                                             >
                                                 <ListItemAvatar>
                                                     <Avatar>
-                                                        <UserAvatar src={noti.from[0].Profile_pic}
-                                                            name={noti.from[0].username} />
+                                                        <UserAvatar src={noti.from[0]?.Profile_pic}
+                                                            name={noti.from[0]?.username} />
                                                     </Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText
                                                     primary={
-                                                        <Link href={'/user/' + noti.from[0]._id}>
-                                                            {noti.from[0].username}
+                                                        <Link href={'/user/' + noti?.from[0]?._id}>
+                                                            {noti.from[0]?.username}
                                                         </Link>
                                                     }
-                                                    secondary={`${noti.from[0].username} ${noti.text}`}
+                                                    secondary={`${noti.from[0]?.username} ${noti.text}`}
                                                 />
                                             </ListItem>
                                             <Divider variant="inset" component="li" />

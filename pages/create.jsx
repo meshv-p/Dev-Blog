@@ -28,16 +28,19 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 const CreateBlog = () => {
     // const context = useContext(blogContext);
-    let blogHistory = window.history.state.usr?.blog;
+    const [blogHistory, setBlogHistory] = useState(null)
     let { URL } = useGlobal();
     let { logginUserData } = useAuth()
     const [open, setOpen] = React.useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [blogError, setBlogError] = useState(null)
     const [blog, setBlog] = useState({
-        title: blogHistory?.title ?? "",
-        desc: blogHistory?.desc ?? "",
-        tag: blogHistory?.tag ?? []
+        title: "",
+        desc: "",
+        tag: [],
+        coverImg: null,
+
+
     })
     const [tagSuggestions, setTagSuggestions] = useState([])
 
@@ -50,6 +53,7 @@ const CreateBlog = () => {
 
     useEffect(() => {
         console.log(window.history.state.usr);
+        setBlogHistory(window.history.state.usr?.blog);
 
     }, [])
 

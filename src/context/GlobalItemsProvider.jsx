@@ -14,6 +14,9 @@ export const GlobalItemsProvider = ({ children }) => {
     const [search, setSearch] = React.useState("");
     const [alignment, setAlignment] = React.useState("title");
 
+    // edit Blog
+    const [editBlog, setEditBlog] = useState(null);
+
     //UseEffects
     useEffect(() => {
         if (localStorage.getItem("Theme")) {
@@ -58,6 +61,8 @@ export const GlobalItemsProvider = ({ children }) => {
         setSearchData,
         alignment,
         setAlignment,
+        editBlog,
+        setEditBlog,
 
 
         //Function
