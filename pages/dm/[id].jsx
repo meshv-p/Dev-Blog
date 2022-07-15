@@ -1,4 +1,5 @@
 import {
+    Badge,
     Box,
     Button,
     Card,
@@ -21,6 +22,7 @@ import { useRouter } from 'next/router';
 import { useConversations } from '../../src/context/ConversatioinsProvider';
 import { useSocket } from '../../src/context/socketProider';
 import { useAuth } from '../../src/context/AuthenticationProvider';
+import styled from '@emotion/styled';
 
 const ChatScreen = () => {
     let { logginUserData } = useAuth()
@@ -38,6 +40,8 @@ const ChatScreen = () => {
         selectedUserData,
         unread,
         setUnread,
+        onlineU
+
     } = useConversations()
     // let Cuser = JSON.parse(localStorage.getItem('user'))
     const setRef = useCallback(node => {
@@ -174,7 +178,34 @@ const ChatScreen = () => {
             'fromMe': true
         })
     }
-
+    const StyledBadge = styled(Badge)(({ theme }) => ({
+        '& .MuiBadge-badge': {
+            backgroundColor: '#44b700',
+            color: '#44b700',
+            boxShadow: `0 0 0 1px ${theme.palette.background.paper}`,
+            '&::after': {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                borderRadius: '50%',
+                animation: 'ripple 1.2s infinite ease-in-out',
+                border: '1px solid currentColor',
+                content: '""',
+            },
+        },
+        '@keyframes ripple': {
+            '0%': {
+                transform: 'scale(.8)',
+                opacity: 1,
+            },
+            '100%': {
+                transform: 'scale(2.4)',
+                opacity: 0,
+            },
+        },
+    }));
 
     return (
 
@@ -195,8 +226,15 @@ const ChatScreen = () => {
                                         }}>
                                             <ArrowBackIosRoundedIcon />
                                         </IconButton>}
-                                        <UserAvatar src={selectedUserData?.Profile_pic}
-                                            name={selectedUserData?.username ?? 'User'} />
+                                        <StyledBadge
+                                            overlap="circular"
+                                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                            // variant={checkOnlineUser(onlineU, user._id) ? 'dot' : 'standard'}
+                                            variant={onlineU?.find(u => u.id === selectedUserData._id) ? 'dot' : 'standard'}
+                                        >
+                                            <UserAvatar src={selectedUserData.Profile_pic} name={selectedUserData.username} />
+
+                                        </StyledBadge>
                                     </Stack>
                                 }
                                 title={selectedUserData?.username}
