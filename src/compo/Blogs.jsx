@@ -56,10 +56,10 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
     //     // console.log(e.currentTarget.dataset.key)
     //     let id = e.currentTarget.dataset.key;
     //     if (BlogType === 'user') {
-    //         return history(`/user/${id}`);
+    //         return history.push(`/user/${id}`);
 
     //     }
-    //     history(`/blog/${id}`);
+    //     history.push(`/blog/${id}`);
     // }
     const openProfile = (e) => {
         let id = e.currentTarget.dataset.key;
@@ -127,6 +127,38 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
         }
     }
 
+
+    const followUser = (userId, isFollow) => {
+        fetch(`${URL}/api/v1/notification/`, {
+            method: "POST",
+            body: JSON.stringify({
+                from: `${JSON.parse(localStorage.getItem("user")).profile._id}`,
+                to: `${blog?._id}`,
+                text: `has ${isFollow ? "Unfollowed" : "Followed"} you.`,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization:
+                    JSON.parse(localStorage.getItem("user"))?.authToken ||
+                    JSON.parse(sessionStorage.getItem("user"))?.authToken,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => console.log(data));
+
+        fetch(`${URL}/api/v1/users/friends/${userId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `${logginUserData.authToken}`,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                history.push(history.pathname)
+            });
+    };
     return (
         <>
             <Card elevation={3} component='div' sx={{ my: 1, cursor: 'pointer', border: `1px solid ${theme ? '#d9d9d9' : '#424242'}`, ":focus": { borderColor: '#42a5f5' } }}
@@ -154,7 +186,7 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
                     }
                     title={blog.user?.username || blog?.username}
                     // subheader={blog.createdAt}
-                    subheader={timeAgo(blog?.createdAt) + ' ago'}
+                    subheader={'Posted ' + timeAgo(blog?.createdAt) + ' ago'}
                 />
                 <CardContent sx={{ cursor: 'pointer', ":focus": { borderColor: 'red' } }} data-key={blog._id}>
                     <Link href={`/blog/${blog._id}`} scroll={true} >
@@ -168,10 +200,41 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
                     </Link>
 
                     {/* <Typography */}
-                    <Typography dangerouslySetInnerHTML={{ __html: `${(blog?.desc)?.slice(0, 50)} ...` }}
-                        variant='body2'
-                        color="text.secondary">
-                        {/* {(blog?.desc)?.slice(0, 50)} */}
+                    {
+                        BlogType === 'user' ?
+                            <>
+                                <Typography variant='body1'>{blog?.name} - {blog?.email}</Typography>
+                            </> :
+
+
+                            <Typography dangerouslySetInnerHTML={{ __html: `${(blog?.desc)?.slice(0, 50)} ...` }}
+                                variant='body2'
+                                color="text.secondary">
+                                {/* {(blog?.desc)?.slice(0, 50)} */}
+                            </Typography>
+                    }
+
+                    {/* Followers */}
+                    <Typography variant='body2' color="text.secondary">
+                        {
+                            BlogType === 'user' && (
+                                <Stack direction='column'>
+                                    <Typography> Folllowers:{(blog.followers)?.length} ||
+                                        Following:{(blog.following)?.length}</Typography>
+
+                                    <AvatarGroup total={(blog.followers)?.length} sx={{ justifyContent: 'flex-end' }}>
+                                        {
+                                            blog.followers?.map((user, i) => (
+
+                                                <UserAvatar src={user.Profile_pic} key={i} name={user.username} />
+
+                                            ))
+                                        }
+                                    </AvatarGroup>
+
+                                </Stack>
+                            )
+                        }
                     </Typography>
 
                     <Stack direction="row" gap={2} sx={{ my: 1 }} flexWrap="wrap">
@@ -201,29 +264,47 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
                 </CardContent>
 
 
-                <CardActions>
-                    <IconButton onClick={handleLike}>
-                        {
-                            userLiked ?
-                                <FavoriteIcon sx={{ color: '#42a5f5' }} />
-                                :
-                                <FavoriteIcon />
+                {
 
-                        }
-                    </IconButton>
-                    {/* <Typography>{blog.totalLike ? blog.totalLike : 0}  likes</Typography> */}
-                    <Typography>{totalLike} likes</Typography>
-                    <IconButton onClick={goToBlogComment}>
-                        <ChatBubbleIcon />
-                    </IconButton>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <IconButton onClick={e => {
-                        shareBlog(blog)
-                    }}>
-                        <SendIcon />
-                    </IconButton>
+                    (BlogType !== 'user') ?
 
-                </CardActions>
+                        <CardActions>
+                            <IconButton onClick={handleLike}>
+                                {
+                                    userLiked ?
+                                        <FavoriteIcon sx={{ color: '#42a5f5' }} />
+                                        :
+                                        <FavoriteIcon />
+
+                                }
+                            </IconButton>
+                            {/* <Typography>{blog.totalLike ? blog.totalLike : 0}  likes</Typography> */}
+                            <Typography>{totalLike ? totalLike : 0} likes</Typography>
+                            <IconButton onClick={goToBlogComment}>
+                                <ChatBubbleIcon />
+                            </IconButton>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <IconButton onClick={e => {
+                                shareBlog(blog)
+                            }}>
+                                <SendIcon />
+                            </IconButton>
+
+                        </CardActions> : <Stack spacing={2} direction='row' sx={{ p: 1 }}>
+                            {
+                                blog._id !== logginUserData?.profile?._id && (
+                                    (blog?.followers)?.find(({ user }) => user === logginUserData?.profile.user) ?
+                                        <Button variant='contained' onClick={() => followUser(blog?._id, true)}>
+                                            UnFollow
+                                        </Button> :
+                                        <Button variant='text' onClick={() => followUser(blog?._id, false)}>
+                                            Follow
+                                        </Button>
+                                )
+                            }
+                            <Button onClick={() => history.push('/chat')} variant='outlined'>Message</Button>
+                        </Stack>
+                }
 
 
             </Card>

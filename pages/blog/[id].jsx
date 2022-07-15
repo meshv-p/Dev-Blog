@@ -170,7 +170,7 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
                             subheader={`Posted ${timeAgo(blog.createdAt)} ago`}
 
                             action={
-                                !logginUserData && blog?.user?._id === logginUserData?.profile._id &&
+                                logginUserData && blog?.user?._id === logginUserData?.profile?._id &&
                                 <>
                                     <IconButton aria-label="settings" onClick={handleEdit}>
                                         <EditIcon />

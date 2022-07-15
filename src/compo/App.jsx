@@ -12,20 +12,20 @@ import { ConversatioinsProvider } from '../context/ConversatioinsProvider';
 import styles from "../../styles/Home.module.css";
 
 export const App = ({ Component, pageProps }) => {
-    let { darkTheme, topBarProgress, setTopBarProgress } = useGlobal()
+    let { darkTheme, topBarProgress, setTopBarProgress, loadingBarColor } = useGlobal()
 
     useEffect(() => {
 
         const start = () => {
-            console.log("start");
-            setTopBarProgress(10)
+            // console.log("start");
+            setTopBarProgress(20)
 
             // setLoading(true);
         };
         const end = () => {
             setTopBarProgress(100)
 
-            console.log("findished");
+            // console.log("findished");
             // setLoading(false);
         };
         Router.events.on("routeChangeStart", start);
@@ -36,6 +36,7 @@ export const App = ({ Component, pageProps }) => {
         }
     }, [])
 
+    // set loading bar color with 4 changing colors with time
 
 
     return (
@@ -46,7 +47,7 @@ export const App = ({ Component, pageProps }) => {
                         <AuthenticationProvider>
                             <ThemeProvider theme={darkTheme}>
                                 <CssBaseline />
-                                <LoadingBar color='#2196f3' progress={topBarProgress} waitingTime={200} />
+                                <LoadingBar color={loadingBarColor()} height={3.5} progress={topBarProgress} waitingTime={200} />
                                 <Navbar />
                                 <React.Suspense fallback="loading">
                                     <Component {...pageProps} />

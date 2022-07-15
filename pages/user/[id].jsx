@@ -50,7 +50,7 @@ const UserProfile = ({ profile }) => {
         //     // a.find(({user})=>user === '6245cdd699b2268d8bccc4ce')
 
         //     // profile && console.log((profile?.followers)?.find(({user}) => user === loggedinUser?.profile.user), 'current user is following?');
-        profile && setFollow((profile?.followers)?.find(({ _id }) => _id === logginUserData?.profile._id))
+        profile && setFollow((profile?.followers)?.find(({ _id }) => _id === logginUserData?.profile?._id))
 
         //     // eslint-disable-next-line
     }, []);

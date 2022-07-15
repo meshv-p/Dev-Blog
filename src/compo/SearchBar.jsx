@@ -44,7 +44,7 @@ export const SearchBar = () => {
     useEffect(() => {
         if (search === '') return
         SearchData(search)
-    }, [alignment])
+    }, [alignment, history])
 
 
     return (

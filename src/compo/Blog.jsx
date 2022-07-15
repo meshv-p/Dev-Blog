@@ -137,7 +137,7 @@ export const BlogDetail = () => {
                         blog &&
                         // <Card sx={{ background: '#bbdefb' || '#e3f2fd' }}>
 
-                        <Card >
+                        <Card sx={{ ":focus": { borderColor: 'blue' } }}>
                             <Typography sx={{ m: 1 }}>
                                 <Button variant="outlined" onClick={() => {
                                     if (history(-1)) {
@@ -165,7 +165,7 @@ export const BlogDetail = () => {
                                     </Link>
                                 }
                                 // subheader={new Date(blog.createdAt).toLocaleString()}
-                                subheader={`${timeAgo(blog.createdAt)} ago`}
+                                subheader={`posted ${timeAgo(blog.createdAt)} ago`}
                                 action={
                                     blog?.user?._id === loggedinUser?.profile._id &&
                                     <>

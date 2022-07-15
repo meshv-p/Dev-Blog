@@ -48,6 +48,24 @@ export const GlobalItemsProvider = ({ children }) => {
         },
     });
 
+    const loadingBarColor = () => {
+        // let colors = ["#00bcd4", "#009688", "#4caf50", "#8bc34a"]
+        let colors = ["#00bcd4", "#009688", "#4caf50", "#3cba54", '#f4c20d', '#db3236', 'black']
+        // let colors = ["green", "blue", "pink", "black"]
+
+        // changes color every time with time
+        // setInterval(() => {
+        let random = Math.floor(Math.random() * colors.length);
+
+        // console.log(colors[random], random);
+        // setTopBarProgress(random);
+
+        return colors[random];
+        // }, 1000);
+
+        // return 'red'
+    }
+
 
     let value = {
         //States
@@ -67,6 +85,7 @@ export const GlobalItemsProvider = ({ children }) => {
 
         //Function
         toggleTheme,
+        loadingBarColor,
 
         //Const
         darkTheme,
