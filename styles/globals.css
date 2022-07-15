@@ -15,7 +15,11 @@ a {
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+}
 
-.s{
-  color: hsl(200, 14%, 96%);
+::-webkit-scrollbar-thumb{
+  
+  background: #1571c8;
 }
