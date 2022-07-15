@@ -61,7 +61,12 @@ export const Navbar = () => {
             headers: {
                 'Authorization': `${JSON.parse(localStorage.getItem("user"))?.authToken}`
             }
-        }).then(res => res.json()).then(d => {
+        }).then(res => {
+            if (res.status !== 200) {
+                return
+            }
+            res.json()
+        }).then(d => {
             setData(d)
         });
 

@@ -51,9 +51,9 @@ export const App = ({ Component, pageProps }) => {
                                 <React.Suspense fallback="loading">
                                     <Component {...pageProps} />
                                 </React.Suspense>
-                                <footer className={styles.footer}>
+                                {/* <footer className={styles.footer}>
                                     All Rights reserved by Dev Blog
-                                </footer>
+                                </footer> */}
                             </ThemeProvider>
                         </AuthenticationProvider>
                     </ConversatioinsProvider>
