@@ -354,7 +354,7 @@ const CreateBlog = () => {
                                 }
                                 renderInput={(params) => (
                                     <TextField
-                                        onChange={e => tagSuggestion(e)}
+                                        // onChange={e => tagSuggestion(e)}
                                         required={true}
                                         {...params}
                                         label="Tags"

@@ -287,10 +287,13 @@ export const ChatScreen = () => {
                                                                 })}
 
                                                             </Typography>
-                                                            <Typography color={msg.hasUserRead ? 'green' : ""}
-                                                                align='right' fontSize='10px'>
-                                                                ✔✔
-                                                            </Typography>
+                                                            {
+                                                                msg.sender === logginUserData.profile._id &&
+
+                                                                <Typography color={msg.hasUserRead ? 'green' : ""}
+                                                                    align='right' fontSize='10px'>
+                                                                    ✔✔
+                                                                </Typography>}
                                                         </Stack>
                                                     }
 
