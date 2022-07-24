@@ -62,11 +62,13 @@ export const Navbar = () => {
                 'Authorization': `${JSON.parse(localStorage.getItem("user"))?.authToken}`
             }
         }).then(res => {
-            if (res.status !== 200) {
-                return
+            console.log(res.status);
+            if (res.status === 200) {
+                return res.json()
             }
-            res.json()
+            return
         }).then(d => {
+            console.log(d);
             setData(d)
         });
 
@@ -75,6 +77,11 @@ export const Navbar = () => {
 
     }, [history])
 
+
+    useEffect(() => {
+        console.log(logginUserData);
+
+    }, [data])
 
 
 
@@ -293,8 +300,11 @@ export const Navbar = () => {
                                                 </ListItemAvatar>
                                                 <ListItemText
                                                     primary={
-                                                        <Link href={'/user/' + noti?.from[0]?._id}>
-                                                            {noti.from[0]?.username}
+                                                        // <Link href={'/user/' + noti?.from[0]?._id}>
+                                                        <Link href={`/user/${noti?.from[0]._id} `} style={{ cursor: 'pointer' }}>
+                                                            <span style={{ cursor: 'pointer' }}>
+                                                                {noti.from[0]?.username}
+                                                            </span>
                                                         </Link>
                                                     }
                                                     secondary={`${noti.from[0]?.username} ${noti.text}`}
