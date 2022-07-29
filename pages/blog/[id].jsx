@@ -20,6 +20,7 @@ import { useAuth } from '../../src/context/AuthenticationProvider';
 import EditIcon from '@mui/icons-material/Edit';
 import { SEO } from '../../src/compo/SEO';
 import styles from "../../styles/Home.module.css";
+import { sendNotification } from '../../src/utils/notification';
 
 const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
     let { setEditBlog, URL } = useGlobal()
@@ -87,6 +88,13 @@ const BlogDetail = ({ blog, comments: { commentByBlog: comments } }) => {
         if (commentByUser === '') return
         e.preventDefault()
         // console.log(commentByUser)
+
+        // send notification to user who commented on blog
+        if (blog.user._id !== logginUserData._id) {
+
+            sendNotification(blog.user._id, `${logginUserData.name} commented on your blog`)
+        }
+
         fetch(`${URL}/api/v1/comment/${blog._id}`, {
             method: 'POST',
             body: JSON.stringify({ title: commentByUser }),

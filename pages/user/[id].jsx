@@ -26,6 +26,7 @@ import { stringToColor } from "../../src/utils/commonFunctioins";
 import { useRouter } from "next/router";
 import { useAuth } from "../../src/context/AuthenticationProvider";
 import { SEO } from "../../src/compo/SEO";
+import { sendNotification } from "../../src/utils/notification";
 
 const UserProfile = ({ profile }) => {
     // const context = useContext(blogContext);
@@ -66,6 +67,15 @@ const UserProfile = ({ profile }) => {
 
     const followUser = () => {
         setFollow(!follow);
+
+        //send notification to user who liked the blog
+        if (profile.user !== logginUserData.profile._id) {
+            sendNotification(profile.user, `${logginUserData.profile.name} has followed you`);
+
+        }
+
+
+
         fetch(`${URL}/api/v1/notification/`, {
             method: "POST",
             body: JSON.stringify({

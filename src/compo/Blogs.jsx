@@ -27,6 +27,7 @@ import { useRouter } from 'next/router';
 import { useAuth } from '../context/AuthenticationProvider';
 import Image from 'next/image';
 import { Spinner } from './Spinner'
+import { sendNotification } from '../utils/notification';
 
 
 export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
@@ -71,6 +72,11 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
         if (!logginUserData) {
             setOpen(true)
             return
+        }
+
+        //send notification to user who liked the blog
+        if (blog.user._id !== logginUserData.profile._id) {
+            sendNotification(blog.user.username, `${logginUserData.profile.name} ${userLiked ? 'unliked' : 'liked'}  your blog`, 'like')
         }
 
         // "from":"123",
@@ -129,6 +135,10 @@ export const Blog = ({ blog, theme, BlogType = 'title', index }) => {
 
 
     const followUser = (userId, isFollow) => {
+        //send notification to user who followed the user
+        if (blog.user._id !== logginUserData.profile._id) {
+            sendNotification(blog.user.username, `${logginUserData.profile.name} ${isFollow ? 'unfollowed' : 'followed'} you`, 'follow')
+        }
         fetch(`${URL}/api/v1/notification/`, {
             method: "POST",
             body: JSON.stringify({

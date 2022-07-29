@@ -10,11 +10,17 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { SocketProvider } from "../context/socketProider";
 import { ConversatioinsProvider } from '../context/ConversatioinsProvider';
 import styles from "../../styles/Home.module.css";
+import { sendNotification, swRegistration } from '../utils/notification';
 
 export const App = ({ Component, pageProps }) => {
     let { darkTheme, topBarProgress, setTopBarProgress, loadingBarColor } = useGlobal()
 
     useEffect(() => {
+        // check if navgator is available  
+        if (navigator.serviceWorker) {
+            console.log('d');
+            navigator?.serviceWorker.register("sw.js")
+        }
 
         const start = () => {
             // console.log("start");
@@ -36,9 +42,18 @@ export const App = ({ Component, pageProps }) => {
         }
     }, [])
 
+
+    useEffect(() => {
+        if (navigator.serviceWorker) {
+            console.log('d');
+            navigator?.serviceWorker.register("sw.js")
+        }
+        // console.log(navigator);
+        // sendNotification("test", "test")
+    }, [])
+
+
     // set loading bar color with 4 changing colors with time
-
-
     return (
         <>
             <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
